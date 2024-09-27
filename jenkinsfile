@@ -1,3 +1,18 @@
-withEnv(['GIT_SSL_NO_VERIFY=true']) {
-    checkout scm
+pipeline {
+    agent any  // Ejecutar en cualquier nodo disponible
+
+    stages {
+        stage('Compilación') {  // Etapa de compilación
+            steps {
+                echo 'Compilando el proyecto...'
+                sh 'javac HolaMundo.java'  // Compilar el archivo HolaMundo.java
+            }
+        }
+        stage('Ejecución') {  // Etapa de ejecución
+            steps {
+                echo 'Ejecutando el proyecto...'
+                sh 'java HolaMundo'  // Ejecutar el programa Java
+            }
+        }
+    }
 }
