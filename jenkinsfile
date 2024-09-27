@@ -1,18 +1,27 @@
 pipeline {
-    agent any  // Ejecutar en cualquier nodo disponible
-
+    agent any
     stages {
-        stage('Compilación') {  // Etapa de compilación
+        stage('Build') {
             steps {
-                echo 'Compilando el proyecto...'
-                sh 'javac HolaMundo.java'  // Compilar el archivo HolaMundo.java
+                echo 'Construyendo el proyecto...'
+                // Ejecutar Maven para construir el proyecto
+                sh 'mvn clean package'  // Reemplaza con gradle si es necesario
             }
         }
-        stage('Ejecución') {  // Etapa de ejecución
+        stage('Test') {
             steps {
-                echo 'Ejecutando el proyecto...'
-                sh 'java HolaMundo'  // Ejecutar el programa Java
+                echo 'Ejecutando pruebas...'
+                // Ejecutar las pruebas con Maven
+                sh 'mvn test'  // Reemplaza con gradle si es necesario
             }
+        }
+    }
+    post {
+        success {
+            echo 'Construcción y pruebas completadas exitosamente.'
+        }
+        failure {
+            echo 'Hubo un error en la construcción o en las pruebas.'
         }
     }
 }
